@@ -41,7 +41,6 @@ export default function Area(props) {
   useEffect(() => {
     const speed = 500 - score * 20
     const timeout = setTimeout(() => moveSnakeByDirection(), speed)
-    console.log(speed);
     return () => clearTimeout(timeout)
   }, [moveSnakeByDirection, snakeCoords, score])
 
