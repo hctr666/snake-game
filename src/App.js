@@ -1,24 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
+import Area from './Area'
+import Controls from './Controls'
+import { reducer, initialState } from './store'
+import './App.scss'
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Area {...{ ...state, dispatch } } />
+      <Controls {...{ snakeCoords: state.snakeCoords, dispatch }} />
     </div>
   );
 }

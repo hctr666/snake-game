@@ -1,0 +1,26 @@
+$size: 25px;
+
+.Area {
+  &Node {
+    width: $size;
+    height: $size;
+    box-shadow: 0 0 0 1px #333;
+  
+    &_Snake {
+      background-color: green;
+      box-shadow: 0 0 0 1px green;
+      &.start {
+        border-top-left-radius: $size;
+        border-bottom-left-radius: $size;
+      }
+      &.end {
+        border-top-right-radius: $size;
+        border-bottom-right-radius: $size;
+      }
+    }
+
+    &_Food {
+      background-color: coral;
+    }
+  }
+}
