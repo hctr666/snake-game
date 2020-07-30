@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import AreaNode from './AreaNode'
 import './Area.scss'
 
@@ -23,30 +23,35 @@ export default function Area(props) {
   const { snakeCoords, snakeDirection, dispatch, cols, rows, foodCoords, score } = props
   const grid = useHashMap(createArray(rows), createArray(cols))
 
+  // Move snake based on actioned direction
   const moveSnakeByDirection = useCallback(() => {
     dispatch({ type: snakeActionType[snakeDirection] })
   }, [dispatch, snakeDirection])
 
-  const setFoodNewCoords = (x, y) => {
+  // Set new food coords
+  const setFoodNewCoords = useCallback((x, y) => {
     const coords = { x: parseInt(Math.random() * rows), y: parseInt(Math.random() * cols) }
     // Try again if food position matches the snake one
     if (x === snakeCoords.x && y === snakeCoords.y) {
       setFoodNewCoords(coords.x, coords.y)
     }
     dispatch({ type: 'updateFoodCoords', payload: coords })
-  }
+  }, [rows, cols, snakeCoords, dispatch])
 
   useEffect(() => {
-    const timeout = setTimeout(() => moveSnakeByDirection(), 200)
+    const speed = 500 - score * 20
+    const timeout = setTimeout(() => moveSnakeByDirection(), speed)
+    console.log(speed);
     return () => clearTimeout(timeout)
-  }, [moveSnakeByDirection, snakeCoords])
+  }, [moveSnakeByDirection, snakeCoords, score])
 
   useEffect(() => {
+    // Check if snake has found the food
     if (foodCoords.x === snakeCoords.x && foodCoords.y === snakeCoords.y) {
       dispatch({ type: 'incrementScore' })
       setFoodNewCoords()
     }
-  }, [snakeCoords, foodCoords, dispatch])
+  }, [snakeCoords, foodCoords, dispatch, setFoodNewCoords])
 
   return <div className="Area">
     {Array.from(grid).map((row) => {
