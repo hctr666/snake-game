@@ -1,10 +1,12 @@
-$size: 25px;
+$size: 24px;
 
 .Area {
   &Node {
     width: $size;
     height: $size;
     box-shadow: 0 0 0 1px #333;
+    font-size: 12px;
+    line-height: 24px;
   
     &_Snake {
       background-color: green;
