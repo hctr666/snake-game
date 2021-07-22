@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
-import Area from './Area'
-import { reducer, initialState } from './store'
+import Area from '../Area'
+import { reducer, initialState } from '../reducer'
 import './App.scss'
 
 function App() {
